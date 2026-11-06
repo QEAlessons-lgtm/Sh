@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رحلة اكتشاف الحروف | ش ج ت ط</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
+:root{--ink:#253047;--muted:#65718a;--cream:#fffaf0;--orange:#ff9d45;--pink:#ff7fa5;--blue:#69b9ed;--green:#75c99b;--purple:#a995e8;--yellow:#ffd66e}
+*{box-sizing:border-box} body{margin:0;font-family:'Cairo',Tahoma,sans-serif;background:linear-gradient(135deg,#fff7e8,#edf8ff);color:var(--ink)}
+button{font:inherit;cursor:pointer;border:0} .app{max-width:1100px;margin:auto;padding:16px}
+header{background:white;border-radius:26px;padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 8px 24px #35435b12;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:58px;height:58px;border-radius:19px;background:linear-gradient(135deg,#ffb65f,#ff829e);display:grid;place-items:center;font-size:31px;color:white;font-weight:900}.brand h1{font-size:clamp(20px,3vw,29px);margin:0}.brand p{margin:0;color:var(--muted);font-size:13px}
+.progress-wrap{min-width:190px}.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}.progress{height:10px;background:#edf0f5;border-radius:20px;overflow:hidden;margin-top:5px}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--pink));transition:.3s}
+.tabs{display:flex;gap:8px;overflow:auto;padding:16px 2px 10px}.tab{white-space:nowrap;background:#fff;padding:10px 16px;border-radius:16px;color:var(--muted);font-weight:800;box-shadow:0 3px 10px #35435b0a}.tab.active{background:var(--ink);color:white}
+main{background:white;border-radius:28px;min-height:560px;padding:clamp(16px,3vw,30px);box-shadow:0 10px 30px #35435b10}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;background:linear-gradient(120deg,#fff1d9,#fff0f5);border-radius:24px;padding:20px;margin-bottom:20px}.hero h2{margin:0 0 5px;font-size:clamp(22px,4vw,32px)}.hero p{margin:0;color:var(--muted)}.mascot{font-size:62px}
+.section-title{font-size:23px;margin:8px 0 14px}.sub{color:var(--muted);margin-top:-8px}
+.letters{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.letter-card{border-radius:22px;padding:18px 8px;text-align:center;min-height:145px;display:grid;place-items:center;gap:4px;border:3px solid transparent}.letter-card b{font-size:58px;line-height:1}.letter-card span{font-weight:800}.letter-card small{color:#586176}.letter-card.selected{border-color:var(--ink);transform:translateY(-3px)}
+.c-sh{background:#fff0f5}.c-jeem{background:#f0edff}.c-te{background:#eaf7ff}.c-to{background:#fff5df}
+.big-letter{font-size:clamp(100px,18vw,170px);font-weight:900;line-height:1.2;color:#e65b91;text-align:center;text-shadow:4px 5px 0 #ffe0e9}
+.center{text-align:center}.sound-btn{background:var(--ink);color:white;border-radius:18px;padding:12px 20px;font-weight:800;box-shadow:0 5px 0 #141d30}.sound-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #141d30}
+.btn{border-radius:15px;padding:11px 18px;font-weight:800;background:#edf2f8;color:var(--ink)}.btn.primary{background:var(--orange);color:#3b2a17}.btn.good{background:#dff6e8;color:#236744}.btn.pink{background:#ffe1eb;color:#9c3158}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}.word-card{background:#f7f9fc;border:2px solid #edf0f5;border-radius:19px;padding:14px;text-align:center}.word-card .pic{font-size:48px;display:block}.word-card strong{font-size:20px}.word-card small{display:block;color:var(--muted)}
+.pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0}.pill{padding:12px 18px;border-radius:16px;background:#f2efff;font-weight:900;font-size:25px}.pill.active{outline:3px solid var(--ink)}
+.lesson-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.panel{background:#f8faff;border:1px solid #edf0f5;border-radius:22px;padding:18px}.panel h3{margin:0 0 8px}.panel p{color:var(--muted);margin:4px 0 12px}
+.stage{display:none}.stage.active{display:block}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:650px;margin:18px auto}.choice{background:#f5f7fb;border:2px solid #e8edf5;border-radius:18px;padding:16px;font-size:23px;font-weight:900}.choice:hover{border-color:var(--blue)}.choice.correct{background:#e2f8eb;border-color:var(--green)}.choice.wrong{background:#fff0f0;border-color:#f29a9a}
+.feedback{min-height:35px;text-align:center;font-weight:800;margin:10px;color:#28764e}
+.trace-wrap{max-width:550px;margin:auto}.trace{width:100%;height:260px;border:3px dashed #b9c6d9;border-radius:20px;background:repeating-linear-gradient(0deg,#fff,#fff 64px,#eef2f8 65px,#fff 66px);touch-action:none}.trace-help{text-align:center;color:var(--muted)}
+.position-box{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.position{border-radius:18px;padding:16px;text-align:center;background:#f5f7fb}.position b{font-size:32px;color:#e65b91}
+.game-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.score{background:#fff2cf;padding:8px 14px;border-radius:14px;font-weight:900}
+.match-area{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:650px;margin:18px auto}.match-item{background:#f6f8fc;border:2px solid #e8edf5;padding:15px;border-radius:16px;text-align:center;font-size:22px;font-weight:900}.match-item.chosen{border-color:var(--purple);background:#f2edff}.match-item.done{background:#e2f8eb;border-color:var(--green)}
+footer{text-align:center;color:#8791a4;font-size:12px;padding:18px}
+@media(max-width:600px){.app{padding:9px}.letters{grid-template-columns:repeat(2,1fr)}main{min-height:500px;padding:15px}.hero{padding:15px}.mascot{font-size:45px}.position-box{grid-template-columns:1fr}.progress-wrap{width:100%}.tabs{padding-top:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="brand"><div class="logo">أ</div><div><h1>رحلة اكتشاف الحروف</h1><p>أسمع • أكتشف • أقرأ • أكتب • ألعب</p></div></div>
+ <div class="progress-wrap"><div class="progress-label"><span>تقدمي في الرحلة</span><b id="progressText">0%</b></div><div class="progress"><span id="progressBar"></span></div></div>
+</header>
+<nav class="tabs" id="tabs">
+ <button class="tab active" data-stage="home">🏠 البداية</button><button class="tab" data-stage="hear">👂 أسمع الحرف</button><button class="tab" data-stage="discover">🖼️ أكتشف الصور</button><button class="tab" data-stage="stretch">🎵 المدود</button><button class="tab" data-stage="harakat">✏️ الحركات</button><button class="tab" data-stage="write">🖍️ أكتب</button><button class="tab" data-stage="places">🔎 مكان الحرف</button><button class="tab" data-stage="games">🎮 الألعاب</button>
+</nav>
+<main>
+<section class="stage active" id="home">
+ <div class="hero"><div><h2>مرحباً يا بطل الحروف! ⭐</h2><p>هيا نكتشف أربعة حروف جميلة، ونستمع إلى أصواتها، ثم نلعب معاً.</p></div><div class="mascot">🧒🏻📚</div></div>
+ <h2 class="section-title">اختر الحرف الذي تريد اكتشافه</h2>
+ <div class="letters" id="letterPicker"></div>
+ <div class="row"><button class="btn primary" onclick="go('hear')">لنبدأ الرحلة ←</button></div>
+ <div class="panel"><b>كيف أتعلم؟</b><p>اضغط على زر 🔊 لسماع الحرف أو الكلمة. استمع جيداً، وردّد الصوت، ثم جرّب الأنشطة والألعاب.</p></div>
+</section>
+<section class="stage" id="hear">
+ <div class="hero"><div><h2>👂 أسمع الحرف وأردّده</h2><p>استمع إلى صوت الحرف، ثم حاول نطقه بوضوح.</p></div><div class="mascot">🗣️</div></div>
+ <div class="center"><div class="big-letter" id="hearLetter">ش</div><button class="sound-btn" onclick="say(current.char)">🔊 اسمع صوت الحرف</button><p class="sub">ردّد الصوت ثلاث مرات: <b id="repeatLetter">ش • ش • ش</b></p></div>
+ <div class="row"><button class="btn" onclick="previousLetter()">الحرف السابق</button><button class="btn primary" onclick="nextLetter()">الحرف التالي</button></div>
+</section>
+<section class="stage" id="discover">
+ <div class="hero"><div><h2>🖼️ أكتشف الصور والكلمات</h2><p>شاهد الصور، وقل اسم كل صورة، ثم استمع إلى الكلمة.</p></div><div class="mascot">🔍</div></div>
+ <h3 class="section-title">كلمات فيها حرف <span class="currentChar">ش</span></h3>
+ <div class="cards" id="pictureCards"></div>
+ <p class="sub center">اضغط على الصورة أو الكلمة لسماعها.</p>
+</section>
+<section class="stage" id="stretch">
+ <div class="hero"><div><h2>🎵 أتعلم المدود</h2><p>أمدّ صوت الحرف مع الألف والواو والياء.</p></div><div class="mascot">🎶</div></div>
+ <div class="center"><div class="big-letter" id="stretchLetter">شا</div><p>اختر حرف المد، ثم استمع إلى الصوت.</p></div>
+ <div class="pills" id="stretchPills"></div>
+ <div class="row"><button class="sound-btn" onclick="say(document.getElementById('stretchLetter').textContent)">🔊 اسمع المد</button></div>
+ <div class="panel center"><b>تذكّر:</b> <span id="stretchExplain">شَ + ا = شا</span></div>
+</section>
+<section class="stage" id="harakat">
+ <div class="hero"><div><h2>✏️ أتعلم الحركات القصيرة</h2><p>أسمع الحرف مع الفتحة والضمة والكسرة.</p></div><div class="mascot">📖</div></div>
+ <div class="pills" id="harakatPills"></div>
+ <div class="center"><div class="big-letter" id="harakatLetter">شَ</div><button class="sound-btn" onclick="say(document.getElementById('harakatLetter').textContent)">🔊 اسمع الصوت</button></div>
+ <p class="sub center">اضغط على كل حركة لتتعرف إلى صوتها.</p>
+</section>
+<section class="stage" id="write">
+ <div class="hero"><div><h2>🖍️ دوري لأكتب الحرف!</h2><p>تتبّع شكل الحرف بإصبعك أو بالفأرة داخل الإطار.</p></div><div class="mascot">✍️</div></div>
+ <div class="center"><div class="big-letter" id="writeLetter" style="font-size:65px">ش</div><p>ابدأ من النقطة، وارسم الحرف بهدوء.</p></div>
+ <div class="trace-wrap"><canvas class="trace" id="canvas" width="700" height="320"></canvas><p class="trace-help">ارسم بإصبعك أو بالفأرة. يمكنك المحاولة أكثر من مرة.</p></div>
+ <div class="row"><button class="btn" onclick="clearCanvas()">مسح المحاولة</button><button class="btn good" onclick="say(current.char)">🔊 اسمع الحرف</button></div>
+</section>
+<section class="stage" id="places">
+ <div class="hero"><div><h2>🔎 أين يوجد الحرف في الكلمة؟</h2><p>قد يأتي الحرف في بداية الكلمة أو وسطها أو نهايتها.</p></div><div class="mascot">🧩</div></div>
+ <div class="position-box" id="positionCards"></div>
+ <p class="sub center">اقرأ الكلمة ولاحظ مكان الحرف الملوّن.</p>
+</section>
+<section class="stage" id="games">
+ <div class="hero"><div><h2>🎮 هيا نلعب ونتحدى أنفسنا!</h2><p>استخدم ما تعلمته واجمع النجوم.</p></div><div class="mascot">🏆</div></div>
+ <div class="game-top"><h3>اللعبة الأولى: اختر الحرف الصحيح</h3><span class="score">⭐ النقاط: <b id="score">0</b></span></div>
+ <div class="panel center"><p>ما الحرف الذي تسمعه؟</p><button class="sound-btn" onclick="say(gameTarget)">🔊 استمع جيداً</button><div class="choice-grid" id="gameChoices"></div><div class="feedback" id="gameFeedback"></div><button class="btn primary" onclick="newGameQuestion()">سؤال جديد ↻</button></div>
+ <div class="panel" style="margin-top:18px"><h3>اللعبة الثانية: صِل الحرف بالكلمة</h3><p>اختر حرفاً، ثم اختر الكلمة التي تبدأ به.</p><div class="match-area" id="matchArea"></div><div class="feedback" id="matchFeedback"></div><button class="btn" onclick="newMatch()">إعادة اللعبة</button></div>
+ <div class="panel" style="margin-top:18px"><h3>اللعبة الثالثة: أين أسمع الحرف؟</h3><p id="positionQuestion">اختر كلمة يظهر فيها حرف ش في أولها.</p><div class="choice-grid" id="positionGame"></div><div class="feedback" id="positionFeedback"></div><button class="btn" onclick="newPositionGame()">سؤال جديد</button></div>
+</section>
+</main>
+<footer>صُممت هذه الرحلة لتعلّم الحروف بطريقة ممتعة 🌟</footer>
+</div>
+<script>
+const data=[
+ {char:'ش',name:'الشين',color:'c-sh',words:[['شمس','☀️','start'],['شجرة','🌳','start'],['فراشة','🦋','middle'],['عش','🪺','end'],['ريشة','🪶','middle'],['شباك','🪟','start']]},
+ {char:'ج',name:'الجيم',color:'c-jeem',words:[['جمل','🐪','start'],['جرس','🔔','start'],['شجرة','🌳','middle'],['ثلج','❄️','end'],['دجاجة','🐔','middle'],['تاج','👑','end']]},
+ {char:'ت',name:'التاء',color:'c-te',words:[['تفاح','🍎','start'],['تاج','👑','start'],['كتاب','📘','middle'],['بنت','👧','end'],['مفتاح','🔑','middle'],['بيت','🏠','end']]},
+ {char:'ط',name:'الطاء',color:'c-to',words:[['طائرة','✈️','start'],['طبل','🥁','start'],['مطر','🌧️','middle'],['خيط','🧵','end'],['طاولة','🪑','start'],['بطة','🦆','middle']]}
+];
+let idx=0, score=0, gameTarget='ش', matchFirst=null, matchSecond=null;
+let current=data[idx];
+const $=id=>document.getElementById(id);
+function say(txt){if(!('speechSynthesis'in window)){alert('خاصية النطق غير متاحة في هذا المتصفح.');return} speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(txt);u.lang='ar-SA';u.rate=.72;u.pitch=1.05;speechSynthesis.speak(u)}
+function renderPicker(){$('letterPicker').innerHTML=data.map((d,i)=>`<button class="letter-card ${d.color} ${i===idx?'selected':''}" onclick="selectLetter(${i})"><b>${d.char}</b><span>${d.name}</span><small>اضغط للاختيار</small></button>`).join('')}
+function selectLetter(i){idx=i;current=data[idx];refresh();renderPicker()}
+function refresh(){
+ document.querySelectorAll('.currentChar').forEach(e=>e.textContent=current.char);
+ $('hearLetter').textContent=current.char;$('repeatLetter').textContent=[current.char,current.char,current.char].join(' • ');
+ $('writeLetter').textContent=current.char;renderPictures();renderStretch();renderHarakat();renderPositions();
+}
+function renderPictures(){$('pictureCards').innerHTML=current.words.map(w=>`<button class="word-card" onclick="say('${w[0]}')"><span class="pic">${w[1]}</span><strong>${w[0]}</strong><small>🔊 اضغط للاستماع</small></button>`).join('')}
+const stretches=[['ا','ا','ا','مدّ بالألف'],['و','و','و','مدّ بالواو'],['ي','ي','ي','مدّ بالياء']];
+function renderStretch(){let forms=[current.char+'ا',current.char+'و',current.char+'ي'];$('stretchPills').innerHTML=forms.map((f,i)=>`<button class="pill ${i===0?'active':''}" onclick="chooseStretch(${i})">${f}</button>`).join('');chooseStretch(0)}
+function chooseStretch(i){let forms=[current.char+'ا',current.char+'و',current.char+'ي'];document.querySelectorAll('#stretchPills .pill').forEach((e,j)=>e.classList.toggle('active',j===i));$('stretchLetter').textContent=forms[i];$('stretchExplain').textContent=current.char+'َ + '+['ا','و','ي'][i]+' = '+forms[i];}
+function renderHarakat(){let forms=[current.char+'َ',current.char+'ُ',current.char+'ِ'];let labels=['الفتحة','الضمة','الكسرة'];$('harakatPills').innerHTML=forms.map((f,i)=>`<button class="pill ${i===0?'active':''}" onclick="chooseHaraka(${i})">${labels[i]} ${f}</button>`).join('');chooseHaraka(0)}
+function chooseHaraka(i){let forms=[current.char+'َ',current.char+'ُ',current.char+'ِ'];document.querySelectorAll('#harakatPills .pill').forEach((e,j)=>e.classList.toggle('active',j===i));$('harakatLetter').textContent=forms[i]}
+function renderPositions(){let types=[['start','بداية الكلمة'],['middle','وسط الكلمة'],['end','نهاية الكلمة']];$('positionCards').innerHTML=types.map(([type,label])=>{let w=current.words.find(x=>x[2]===type);let word=w?w[0]:'—';let highlighted=word==='—'?word:word.replace(current.char,`<span style="color:#e65b91;font-weight:900">${current.char}</span>`);return `<div class="position"><h3>${label}</h3><b>${highlighted}</b><p>${w?w[1]:''} ${word}</p><button class="btn" onclick="say('${word}')">🔊 استمع</button></div>`}).join('')}
+function go(id){document.querySelectorAll('.stage').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.stage===id));let order=['home','hear','discover','stretch','harakat','write','places','games'];let n=order.indexOf(id);let p=Math.round(n/7*100);$('progressText').textContent=p+'%';$('progressBar').style.width=p+'%';if(id==='games'){newGameQuestion();newMatch();newPositionGame()}if(id==='write')clearCanvas();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>go(t.dataset.stage)));
+function nextLetter(){selectLetter((idx+1)%data.length)}function previousLetter(){selectLetter((idx+data.length-1)%data.length)}
+// Drawing canvas
+const canvas=$('canvas'),ctx=canvas.getContext('2d');let drawing=false;
+function point(e){let r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height}}
+canvas.addEventListener('pointerdown',e=>{drawing=true;canvas.setPointerCapture(e.pointerId);let p=point(e);ctx.beginPath();ctx.moveTo(p.x,p.y)});
+canvas.addEventListener('pointermove',e=>{if(!drawing)return;let p=point(e);ctx.lineWidth=13;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#e65b91';ctx.lineTo(p.x,p.y);ctx.stroke()});
+['pointerup','pointercancel'].forEach(ev=>canvas.addEventListener(ev,()=>drawing=false));
+function clearCanvas(){ctx.clearRect(0,0,canvas.width,canvas.height)}
+// Games
+function newGameQuestion(){gameTarget=data[Math.floor(Math.random()*data.length)].char;$('gameChoices').innerHTML=[...data].sort(()=>Math.random()-.5).map(d=>`<button class="choice" onclick="answerLetter('${d.char}',this)">${d.char}</button>`).join('');$('gameFeedback').textContent='';}
+function answerLetter(c,el){if(c===gameTarget){el.classList.add('correct');$('gameFeedback').textContent='أحسنت! إجابة رائعة ⭐';score+=1;$('score').textContent=score;say('أحسنت');}else{el.classList.add('wrong');$('gameFeedback').textContent='حاول مرة أخرى، استمع جيداً.';say('حاول مرة أخرى')}}
+function newMatch(){matchFirst=null;matchSecond=null;$('matchFeedback').textContent='';let letters=[...data].sort(()=>Math.random()-.5);let words=letters.map(d=>({char:d.char,word:d.words.find(w=>w[2]==='start')[0],pic:d.words.find(w=>w[2]==='start')[1]})).sort(()=>Math.random()-.5);$('matchArea').innerHTML=`<div>${letters.map(d=>`<button class="match-item" data-char="${d.char}" onclick="pickMatch(this,'letter')">${d.char}</button>`).join('')}</div><div>${words.map(w=>`<button class="match-item" data-char="${w.char}" onclick="pickMatch(this,'word')">${w.pic} ${w.word}</button>`).join('')}</div>`}
+function pickMatch(el,type){if(el.classList.contains('done'))return;if(type==='letter'){document.querySelectorAll('[data-char]').forEach(e=>{if(e.parentElement===el.parentElement)e.classList.remove('chosen')});matchFirst=el}else{matchSecond=el}el.classList.add('chosen');if(matchFirst&&matchSecond){if(matchFirst.dataset.char===matchSecond.dataset.char){matchFirst.classList.add('done');matchSecond.classList.add('done');$('matchFeedback').textContent='رائع! لقد وصلت بينهما بشكل صحيح.';score++;$('score').textContent=score;say('رائع')}else{$('matchFeedback').textContent='ليست هذه الكلمة، جرّب من جديد.'}matchFirst.classList.remove('chosen');matchSecond.classList.remove('chosen');matchFirst=null;matchSecond=null}}
+function newPositionGame(){let type=['start','middle','end'][Math.floor(Math.random()*3)];let label={start:'أول الكلمة',middle:'وسط الكلمة',end:'آخر الكلمة'}[type];let word=current.words.find(w=>w[2]===type);$('positionQuestion').textContent='اختر كلمة يظهر فيها حرف '+current.char+' في '+label+'.';let opts=[word,...current.words.filter(w=>w[2]!==type).sort(()=>Math.random()-.5).slice(0,3)].sort(()=>Math.random()-.5);$('positionGame').innerHTML=opts.map(w=>`<button class="choice" onclick="checkPosition('${w[0]}','${word[0]}',this)">${w[1]} ${w[0]}</button>`).join('');$('positionFeedback').textContent=''}
+function checkPosition(good,answer,el){if(good===answer){el.classList.add('correct');$('positionFeedback').textContent='ممتاز! انتبهت إلى مكان الحرف.';score++;$('score').textContent=score;say('ممتاز')}else{el.classList.add('wrong');$('positionFeedback').textContent='حاول مرة أخرى ولاحظ مكان الحرف.'}}
+renderPicker();refresh();
+</script>
+</body></html>
